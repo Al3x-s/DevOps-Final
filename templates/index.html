@@ -1,0 +1,29 @@
+<!-- Marylyns additions-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Cards</title>
+</head>
+<body>
+    <h1>User Cards</h1>
+    
+    {% for user in users %}
+        {% include 'card_template.html' %}
+    {% endfor %}
+
+    <!-- Card Form -->
+    <form action="/add_card" method="post">
+        <input type="text" name="name" placeholder="Name">
+        <textarea name="bio" placeholder="Bio"></textarea>
+        <button type="submit">Add Card</button>
+    </form>
+</body>
+</html>
+
+
+
+
+<!-- Marylyns additions-->
+
+
