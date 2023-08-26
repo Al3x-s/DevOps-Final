@@ -11,41 +11,48 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS users
                   (id INTEGER PRIMARY KEY AUTOINCREMENT, 
                    email TEXT NOT NULL, 
                    password TEXT NOT NULL,
-                   image TEXT NOT NULL,
-                   name TEXT NOT NULL,
-                   quote TEXT NOT NULL,
-                   submission INTEGER NOT NULL
+                   image TEXT NOT NULL DEFAULT "image.png",
+                   name TEXT NOT NULL DEFAULT "",
+                   quote TEXT NOT NULL DEFAULT "",
+                   submission INTEGER NOT NULL DEFAULT "0"
                )''')
 conn.commit()
-#DONOTNEED
-#fake_users = [("ALEX", "password", "fhasjfdhasgdf", "ALEX", "wait youre getting paid?"),
-#              ("marylyn", "password", "fhasjfdhasgdf", "marylyn", "wait youre getting paid too?"),
-#              ("deshawn", "password", "fhasjfdhasgdf", "deshawn", "?!?!?!?!?")
-#              ]
-#
-#for u,p,i,n,q in fake_users:
-#    cursor.execute("INSERT INTO users (username, password, image, name, quote) VALUES (?, ?, ?, ?, ?)", (u,p,i,n,q))
-#conn.commit()
-#cursor.execute("SELECT * FROM users")
-#print(cursor.fetchall())
-#DONOTNEED
-#AS
 
+
+conn2 = sqlite3.connect('info.db')
+cursor2 = conn2.cursor()
+cursor.execute('''CREATE TABLE IF NOT EXISTS users
+                   (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    email TEXT NOT NULL,
+                    image TEXT NOT NULL,
+                    name TEXT NOT NULL,
+                    quote TEXT NOT NULL,
+                    submission INTEGER NOT NULL
+                )''')
+conn2.commit()
 
 @app.route("/", methods=["GET","POST"])
 def login():
     if request.method == "POST":
-        x = None
+        x = ''
         username = request.form.get("email")
         password = request.form.get("password")
         #if user info isnt in databse add it otherwise log in
         if check_if_user_exists(username): # chheck if user email is in datdabase
+            print(check_if_user_exists(username))
+            print("++++++++++++++++++++++++++++++++++")
             if check_user_updated(username, password): # if both user and pass exist
-                return(redirect(url_for('home'))
+                print(check_user_updated(username, password))
+                print("second if")
+                return redirect(url_for('home'))
             else:
                 x = user_pass_incorrect()
+                print("first else")
+                return render_template("login.html", incorrect = x)
         else:
             add_user(username, password)
+            print("add user")
+            return redirect(url_for('home'))
     return render_template("login.html")
 
 @app.route("/home")
