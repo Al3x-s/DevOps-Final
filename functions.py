@@ -1,10 +1,10 @@
-def check_if_user_exist(user-email):
+import sqlite3
+def check_if_user_exists(user_email):
     conn = sqlite3.connect("user.db")
     cursor = conn.cursor()
 
-    cursor.execute("SELECT email FROM users WHERE email = ?", (user-email,))
+    cursor.execute("SELECT * FROM users WHERE email = ?", (user_email,))
     result = cursor.fetchone()
-
     conn.close()
     #print(result)
     return result is not None
