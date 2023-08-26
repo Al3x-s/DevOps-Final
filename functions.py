@@ -33,4 +33,5 @@ def add_user(email,password):
     cursor.execute(query,(email,password))
     cursor.execute("SELECT * FROM users")
     print(cursor.fetchall())
+    conn.commit()
     conn.close()

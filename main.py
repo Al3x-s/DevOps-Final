@@ -34,17 +34,25 @@ conn2.commit()
 @app.route("/", methods=["GET","POST"])
 def login():
     if request.method == "POST":
-        x = None
+        x = ''
         username = request.form.get("email")
         password = request.form.get("password")
         #if user info isnt in databse add it otherwise log in
         if check_if_user_exists(username): # chheck if user email is in datdabase
+            print(check_if_user_exists(username))
+            print("++++++++++++++++++++++++++++++++++")
             if check_user_updated(username, password): # if both user and pass exist
-                return(redirect(url_for('home')))
+                print(check_user_updated(username, password))
+                print("second if")
+                return redirect(url_for('home'))
             else:
                 x = user_pass_incorrect()
+                print("first else")
+                return render_template("login.html", incorrect = x)
         else:
             add_user(username, password)
+            print("add user")
+            return redirect(url_for('home'))
     return render_template("login.html")
 
 @app.route("/home")
