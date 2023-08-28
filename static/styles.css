@@ -1,16 +1,23 @@
-<<<<<<< HEAD
-/*MR change. i changed .logincard to be body, so that they pages have a similar styling */
+/*
+ trying again! will align the text
+ change the background color to make it closer to DRW's branding
 
-body {
-=======
-.logincard{
->>>>>>> main
-	position:absolute;
-	top:20%;
-	left:40%;
+ * */
+
+
+body{
+
+background-color: rgb(62, 89, 145);
+    color: white;
+    text-align: center;
+    margin: auto;
+
 }
-<<<<<<< HEAD
 
 
-=======
->>>>>>> main
+
+
+
+
+
+
