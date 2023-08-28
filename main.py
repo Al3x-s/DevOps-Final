@@ -2,6 +2,7 @@
 from flask import Flask, render_template, session, request, url_for, redirect
 import sqlite3
 from functions import *
+
 app = Flask(__name__)
 app.secret_key = "a6sidg7fo8hyug2irhyug7hd8owiundilfaud"
 
@@ -66,9 +67,13 @@ def home():
 
 
 #DP
-
-@app.route("/input")
+@app.route("/input", methods=["POST"])
 def user_input():
-    print("adasf")
-#DP
-
+#creating section for user input
+    if request.form("Full Name"):
+        name = request.form("Full Name")
+        print(name)
+#dp
+    
+if __name__ == "__main__":
+  app.run(host="0.0.0.0", port=5000, debug=True)
