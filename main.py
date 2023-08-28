@@ -2,6 +2,10 @@
 from flask import Flask, render_template, session, request, url_for, redirect
 import sqlite3
 from functions import *
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 app = Flask(__name__)
 app.secret_key = "a6sidg7fo8hyug2irhyug7hd8owiundilfaud"
 
@@ -60,15 +64,33 @@ def login():
 @app.route("/home")
 def home():
     if 'logged_in' in session and session['logged_in']:
+<<<<<<< HEAD
         return render_template("index.html")
+=======
+        user_data = get_all_user_data()
+        return render_template("index.html", user_data=user_data)
+>>>>>>> main
     else:
         return redirect(url_for('login'))
 
 
 #DP
+<<<<<<< HEAD
 
 @app.route("/input")
 def user_input():
     print("adasf")
 #DP
 
+=======
+@app.route("/input", methods=["POST"])
+def user_input():
+#creating section for user input
+    if request.form("Full Name"):
+        name = request.form("Full Name")
+        print(name)
+#dp
+    
+if __name__ == "__main__":
+  app.run(host="0.0.0.0", port=5000, debug=True)
+>>>>>>> main
