@@ -71,7 +71,7 @@ def home():
 def user_input():
 #creating section for user input
     if request.method == "POST":
-        name = request.form("name")
+        name = request.form["name"]
         return f"{name}"
     return render_template("input.html")
 #dp
