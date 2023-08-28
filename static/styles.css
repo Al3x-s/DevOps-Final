@@ -1,6 +1,10 @@
-body {
-.logincard{
-	position:absolute;
-	top:20%;
-	left:40%;
+body{
+    background-color: rgb(62, 89, 145);
+    color: white;
+    text-align: center;
+    margin: auto;
+
 }
+
+
+
