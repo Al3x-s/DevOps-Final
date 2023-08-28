@@ -68,13 +68,14 @@ def home():
 
 
 #DP
-@app.route("/input", methods=["POST"])
+@app.route("/input", methods=["POST", "GET"])
 def user_input():
 #creating section for user input
-    if request.form("Full Name"):
-        name = request.form("Full Name")
-        print(name)
+    if request.method == "POST":
+        name = request.form["name"]
+        return f"{name}"
+    return render_template("input.html")
 #dp
     
 if __name__ == "__main__":
-  app.run(host="0.0.0.0", port=5000, debug=True)
+  app.run(host="0.0.0.0", port=2225, debug=True)
