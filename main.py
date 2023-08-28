@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 from flask import Flask, render_template, session, request, url_for, redirect
 import sqlite3
 from functions import *
@@ -45,6 +45,7 @@ def login():
             print("++++++++++++++++++++++++++++++++++")
             if check_user_updated(username, password): # if both user and pass exist
                 session["logged_in"] = True
+                session["email"] = username
                 print(check_user_updated(username, password))
                 print("second if")
                 return redirect(url_for('home'))
@@ -61,19 +62,38 @@ def login():
 @app.route("/home")
 def home():
     if 'logged_in' in session and session['logged_in']:
-        return render_template("index.html")
+        if request.method == "POST":
+            name = request.form.get("name")
+            quote = request.form.get("quote")
+            email = session["email"]
+            if name and quote and email:
+                update_name_quote(name, quote, email)
+        user_data = get_all_user_data()
+        return render_template("index.html", user_data = user_data)
     else:
         return redirect(url_for('login'))
 
 
 #DP
+def update_name_quote(name, quote, email):
+    db = sqlite3.connect("user.db")
+    cursor =  conn.cursor()
+    query = "UPDATE users SET name = ?, quote = ?, where email = ?"
+    cursor.execute(query, (name, quote, email))
+    db.commit()
+    db.close()
+    #db.name = sqlite3.name
 @app.route("/input", methods=["POST", "GET"])
 def user_input():
 #creating section for user input
     if request.method == "POST":
-        name = request.form["name"]
-        return f"{name}"
-    return render_template("input.html")
+        name = request.form.get("name")
+        quote = request.form.get("quote")
+        email = session["email"]
+        if name and quote and email:
+            update_name_quote(name, quote, email)
+        #return f"Name: {name} Quote: {quote}"
+    return render_template("index.html")
 #dp
     
 if __name__ == "__main__":
