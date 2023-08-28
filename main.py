@@ -61,7 +61,8 @@ def login():
 @app.route("/home")
 def home():
     if 'logged_in' in session and session['logged_in']:
-        return render_template("index.html")
+        user_data = get_all_user_data()
+        return render_template("index.html", user_data=user_data)
     else:
         return redirect(url_for('login'))
 
