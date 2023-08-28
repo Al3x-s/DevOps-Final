@@ -20,19 +20,6 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS users
                )''')
 conn.commit()
 
-
-conn2 = sqlite3.connect('info.db')
-cursor2 = conn2.cursor()
-cursor.execute('''CREATE TABLE IF NOT EXISTS users
-                   (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    email TEXT NOT NULL,
-                    image TEXT NOT NULL,
-                    name TEXT NOT NULL,
-                    quote TEXT NOT NULL,
-                    submission INTEGER NOT NULL
-                )''')
-conn2.commit()
-
 @app.route("/", methods=["GET","POST"])
 def login():
     if request.method == "POST":
@@ -59,7 +46,7 @@ def login():
             return redirect(url_for('home'))
     return render_template("login.html")
 
-@app.route("/home")
+@app.route("/home", methods=["GET", "POST"])
 def home():
     if 'logged_in' in session and session['logged_in']:
         if request.method == "POST":
@@ -68,33 +55,11 @@ def home():
             email = session["email"]
             if name and quote and email:
                 update_name_quote(name, quote, email)
+                user_data = get_all_user_data()
+                return render_template("index.html", user_data = user_data)
         user_data = get_all_user_data()
         return render_template("index.html", user_data = user_data)
     else:
         return redirect(url_for('login'))
-
-
-#DP
-def update_name_quote(name, quote, email):
-    db = sqlite3.connect("user.db")
-    cursor =  conn.cursor()
-    query = "UPDATE users SET name = ?, quote = ?, where email = ?"
-    cursor.execute(query, (name, quote, email))
-    db.commit()
-    db.close()
-    #db.name = sqlite3.name
-@app.route("/input", methods=["POST", "GET"])
-def user_input():
-#creating section for user input
-    if request.method == "POST":
-        name = request.form.get("name")
-        quote = request.form.get("quote")
-        email = session["email"]
-        if name and quote and email:
-            update_name_quote(name, quote, email)
-        #return f"Name: {name} Quote: {quote}"
-    return render_template("index.html")
-#dp
-    
 if __name__ == "__main__":
   app.run(host="0.0.0.0", port=2225, debug=True)

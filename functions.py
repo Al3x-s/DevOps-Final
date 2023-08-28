@@ -38,3 +38,10 @@ def get_all_user_data():
     conn.close()
     print(user_data)
     return user_data
+def update_name_quote(name, quote, email):
+    db = sqlite3.connect("user.db")
+    cursor = db.cursor()
+    query = "UPDATE users SET name = ?, quote = ? WHERE email = ?"
+    cursor.execute(query, (name, quote, email))
+    db.commit()
+    db.close()
