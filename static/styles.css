@@ -1,16 +1,15 @@
-<<<<<<< HEAD
-/*MR change. i changed .logincard to be body, so that they pages have a similar styling */
+body{
 
-body {
-=======
-.logincard{
->>>>>>> main
-	position:absolute;
-	top:20%;
-	left:40%;
+background-color: rgb(62, 89, 145);
+    color: white;
+    text-align: center;
+    margin: auto;
+
 }
-<<<<<<< HEAD
 
 
-=======
->>>>>>> main
+
+
+
+
+
