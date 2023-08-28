@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from flask import Flask, render_template, session, request, url_for, redirect
 import sqlite3
 from functions import *
@@ -42,6 +43,7 @@ def login():
             print(check_if_user_exists(username))
             print("++++++++++++++++++++++++++++++++++")
             if check_user_updated(username, password): # if both user and pass exist
+                session["logged_in"] = True
                 print(check_user_updated(username, password))
                 print("second if")
                 return redirect(url_for('home'))
@@ -57,4 +59,16 @@ def login():
 
 @app.route("/home")
 def home():
-    return render_template("index.html")
+    if 'logged_in' in session and session['logged_in']:
+        return render_template("index.html")
+    else:
+        return redirect(url_for('login'))
+
+
+#DP
+
+@app.route("/input")
+def user_input():
+    print("adasf")
+#DP
+
