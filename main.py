@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-from flask import Flask, render_template, session, request, url_for, redirect
+from flask import Flask, render_template, session, request, url_for, redirect, 
+from datetime import timedelta
 import sqlite3
 from functions import *
 
@@ -51,8 +52,8 @@ def home():
             if name and quote and email: # if all udc criteria are met
                 update_name_quote(name, quote, email) # update database with data
                 user_data = get_all_user_data() # collect all data to pass to jinja
-                has_submitted(email) # tell sql user has submitted
-                return render_template("index.html", user_data = user_data, stat=False)
+                #has_submitted(email) # tell sql user has submitted
+                return render_template("index.html", user_data = user_data)
         user_data = get_all_user_data() # passing fata to jinja
         return render_template("index.html", user_data = user_data, stat=has_entered)
     else:
