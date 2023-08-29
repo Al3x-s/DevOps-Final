@@ -1,35 +1,23 @@
 #!/usr/bin/python3
 from main import app
-import os
-import sqlite3
+import pytest
 
-database_path = "DevOps-Final/user.db"
-conn = sqlite3.connect(database_path)
-cursor = conn.cursor()
-cursor.execute('''CREATE TABLE IF NOT EXISTS users 
-                  (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                   email TEXT NOT NULL, 
-                   password TEXT NOT NULL,
-                   image TEXT NOT NULL DEFAULT "image.png",
-                   name TEXT NOT NULL DEFAULT "",
-                   quote TEXT NOT NULL DEFAULT "",
-                   submission INTEGER NOT NULL DEFAULT "0"
-               )''')
-conn.commit()
-def db_connection():
-    conn = sqlite3.connect(database_path)
-    yield conn
-    conn.close()
 
-# Test: Check if there are names in the database
-def test_name_in_database(db_connection):
-    conn = db_connection
-    cursor = conn.cursor()
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
+    client = app.test_client()
+    yield client
 
-    cursor.execute("SELECT COUNT(*) FROM users")
-    result = cursor.fetchone()
-    assert result[0] > 0
-
-# Run the tests
-if __name__ == "__main__":
-    pytest.main()
+def test_login_post(client):
+    response = client.post("/", data={"email": "test@example.com", "password": "password"})
+    assert response.status_code == 200
+'''def test_home_no_user_input(client):
+    # Simulate a logged-in session
+        session['logged_in'] = True
+        session['email'] = 'dap@mail.com.com'
+        assert b'Please enter your name and quote' in response.data
+    response = client.post('/home', data={})
+    print(response.data)  # Print the response data
+    assert b'Please enter your name and quote' in response.data
+'''    
