@@ -10,14 +10,14 @@ app.secret_key = "a6sidg7fo8hyug2irhyug7hd8owiundilfaud"
 #AS
 conn = sqlite3.connect('user.db')
 cursor = conn.cursor()
-cursor.execute('''CREATE TABLE IF NOT EXISTS users 
-                  (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                   email TEXT NOT NULL, 
+cursor.execute('''CREATE TABLE IF NOT EXISTS users
+                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                   email TEXT NOT NULL,
                    password TEXT NOT NULL,
                    image TEXT NOT NULL DEFAULT "image.png",
                    name TEXT NOT NULL DEFAULT "",
                    quote TEXT NOT NULL DEFAULT "",
-                   submission INTEGER NOT NULL DEFAULT "0"
+                   submission INTEGER DEFAULT "0"
                )''')
 conn.commit()
 
@@ -37,6 +37,8 @@ def login():
                 return render_template("login.html", incorrect = x)
         else:
             add_user(username, password) #user cannot be found creating new data entry
+            session["email"] = username
+            session["logged_in"] = True
             return redirect(url_for('home'))
     return render_template("login.html")
 
@@ -57,7 +59,6 @@ def home():
         user_data = get_all_user_data() # passing fata to jinja
         return render_template("index.html", user_data = user_data, stat=has_entered)
     else:
-        session.clear()
         return redirect(url_for('login'))
 
 
