@@ -1,12 +1,15 @@
 FROM python:3.8-slim
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY requirements.txt /app/
+COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
+RUN mkdir /data
 
-COPY . /app/
+COPY . /usr/src/app
+
 EXPOSE 2225
+
 CMD ["python3", "main.py"]
 
