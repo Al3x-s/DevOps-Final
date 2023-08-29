@@ -1,0 +1,13 @@
+*.exe
+*.out
+*.db*.exe
+*.out
+*.db*.exe
+*.out
+*.db*.exe
+*.out
+*.db*.exe
+*.out
+*.db
+
+__pycache__/
