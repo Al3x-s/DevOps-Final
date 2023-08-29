@@ -9,5 +9,6 @@
 *.db*.exe
 *.out
 *.db
-
+__init__.py
+python_test/__init__.py
 __pycache__/
