@@ -46,7 +46,7 @@ def get_status(email):
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
     result = cursor.fetchone()
-    if result[6] == 1:
+    if result[6] == 1: # takes a none type value
         stat = False
     return stat
 
