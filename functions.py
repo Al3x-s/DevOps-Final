@@ -1,4 +1,5 @@
 import sqlite3
+###
 def check_if_user_exists(user_email):
     conn = sqlite3.connect("user.db")
     cursor = conn.cursor()
@@ -7,7 +8,8 @@ def check_if_user_exists(user_email):
     conn.close()
     return result is not None
 
-def authenticate_user(email, password):
+
+def check_user_updated(email, password):
     conn = sqlite3.connect("user.db")
     cursor = conn.cursor()
     query = "SELECT * FROM users WHERE email = ? AND password = ?"
@@ -16,43 +18,23 @@ def authenticate_user(email, password):
     conn.close()
     return result is not None
 
+def user_pass_incorrect():
+    x = "User password is incorrect"
+    return x
+
 def add_user(email,password):
     conn = sqlite3.connect("user.db")
     cursor = conn.cursor()
     query = "INSERT INTO users (email, password) VALUES (?,?)"
     cursor.execute(query,(email,password))
+    cursor.execute("SELECT * FROM users")
     conn.commit()
     conn.close()
-
 def get_all_user_data():
     conn = sqlite3.connect('user.db')
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM users")
     user_data = cursor.fetchall()
     conn.close()
+    print(user_data)
     return user_data
-
-def update_name_quote(name, quote, email):
-    db = sqlite3.connect("user.db")
-    cursor = db.cursor()
-    query = "UPDATE users SET name = ?, quote = ? WHERE email = ?"
-    cursor.execute(query, (name, quote, email))
-    db.commit()
-    db.close()
-
-def get_status(email):
-    stat = True
-    conn = sqlite3.connect("user.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
-    result = cursor.fetchone()
-    if result[6] == 1:
-        stat = False
-    return stat
-
-def has_submitted(email):
-    conn = sqlite3.connect("user.db")
-    cursor = conn.cursor()
-    cursor.execute("UPDATE users SET submission = ? WHERE email = ?",(1 , email))
-    conn.commit()
-    conn.close()
