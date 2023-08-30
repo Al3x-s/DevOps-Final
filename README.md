@@ -1,7 +1,5 @@
 # Class Yearbook
 
-![Yearbook Cover](link-to-cover-image.png) <!-- You can add an image here if you want -->
-
 Welcome to the Class Yearbook project! This web application allows users to sign into the Yearbook portal and upload their memorable quotes. The second page of the application displays the uploaded quotes along with the user's email and name.
 
 ## Table of Contents
@@ -35,9 +33,7 @@ To use the Class Yearbook application:
 - User-friendly interface for a smooth experience.
 
 ## Screenshots
-
-![Screenshot 1](link-to-screenshot-1.png)
-![Screenshot 2](link-to-screenshot-2.png)
+Coming Soon * 
 
 ## Dependencies
 
